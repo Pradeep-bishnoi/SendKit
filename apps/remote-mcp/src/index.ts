@@ -1,14 +1,9 @@
-import { Hono ,type Context} from "hono";
+import { Hono, type Context } from "hono";
 import { createClerkClient } from "@clerk/backend";
-import { 
-  McpServer
-} from "@modelcontextprotocol/sdk/server/mcp.js";
-import { 
-  WebStandardStreamableHTTPServerTransport
-} from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { WebStandardStreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js";
 
-import {generateClerkProtectedResourceMetadata} from "@clerk/mcp-tools/server";
-
+import { generateClerkProtectedResourceMetadata } from "@clerk/mcp-tools/server";
 
 import { sendTelegramMessage, telegramMessageInputSchema } from "sendkit-core";
 
@@ -42,11 +37,11 @@ function createServer(botToken: string) {
       inputSchema: telegramMessageInputSchema.shape,
     },
     async (input) => {
-      const result = await sendTelegramMessage({ 
-        ...input, 
+      const result = await sendTelegramMessage({
+        ...input,
         botToken,
       });
-  
+
       return {
         content: [
           {
@@ -60,7 +55,7 @@ function createServer(botToken: string) {
   );
 
   return server;
-};
+}
 
 const app = new Hono();
 
@@ -75,7 +70,6 @@ function unauthorizedMcpResponse(c: Context, botToken: string) {
   );
   return c.json({ error: "Unauthorized" }, 401);
 }
- 
 
 app.get("/.well-known/oauth-protected-resource/:botToken/mcp", (c) => {
   return c.json(
