@@ -3,11 +3,17 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "exports":{
+    ".":"./src/index.ts"
+  },
+  "scripts": {
+    "start": "bun run src/index.ts"
+  },
   "dependencies": {
     "@clerk/backend": "^3.16.9",
     "@clerk/mcp-tools": "^0.6.0",
     "@modelcontextprotocol/sdk": "^1.30.0",
     "hono": "^4.13.3",
-    "@pradeepbishnoiorg/sendkit-core": "workspace:*"
+    "@pradeepbishnoiorg/sendkit-core": "0.0.0"
   }
 }
